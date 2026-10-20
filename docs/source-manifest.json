@@ -1,0 +1,269 @@
+{
+  "packageVersion": "3.1.0",
+  "documentedOn": "2026-10-20",
+  "publicChanges": [
+    "bridge URL parameterized in config.js",
+    "private LAN origin removed",
+    "unused uncredited illustrative bitmaps omitted",
+    "unsupported service logos omitted"
+  ],
+  "files": [
+    {
+      "path": "app/config.js",
+      "sha256": "5e9a23de848ecdf638fb811a76726d16bea412fca7b0158637f3e278da497b55"
+    },
+    {
+      "path": "app/config.xml",
+      "sha256": "98dd38873d2ac5f9853495f273b800e66a5dcb129ffcfa343f6bbb8e00325bda"
+    },
+    {
+      "path": "app/enhancements.js",
+      "sha256": "ec206dee32a6d238a2d211c6a474baafc5ed7ae052335d4b2b8e51e2c2577d1e"
+    },
+    {
+      "path": "app/fonts/LICENSE.txt",
+      "sha256": "18aabf190848725e2576eefb5c29ba06aac1029d02132252a7f312eac2e50cf3"
+    },
+    {
+      "path": "app/fonts/Manrope-OFL.txt",
+      "sha256": "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b"
+    },
+    {
+      "path": "app/fonts/inter-light.woff2",
+      "sha256": "1484800cb0056acaef74e22c5add27a8bc106cc38a4c20aa2bcc25a4a0cdf1d2"
+    },
+    {
+      "path": "app/fonts/inter-regular.woff2",
+      "sha256": "dd05e326cf8eac3b55acecf29c842ed73e6e6dd06491cf47f7e8800680ab3e33"
+    },
+    {
+      "path": "app/fonts/manrope.woff2",
+      "sha256": "e310b55a7fd9677f5e3555e6c6c4d064fa1f1d24393f0ddbe217cea12a8c432f"
+    },
+    {
+      "path": "app/icon.png",
+      "sha256": "475f2a8f3d3e3c6fcf12f9df026f29ec87a35a7732c138b826b46076776128b7"
+    },
+    {
+      "path": "app/index.html",
+      "sha256": "167ec35128160c1ab74322d00c78d5daea911f99c6def4dd7ecfd1b1c41555cf"
+    },
+    {
+      "path": "app/logos/apple.png",
+      "sha256": "7d57afb682fc0257e26ceb63aced547be5a84982f44c7e86d8ae8099fac4228c"
+    },
+    {
+      "path": "app/logos/apple.svg",
+      "sha256": "84d61c81dd9354146f9ccbd526a2e0b23213016e1aa4d6028a20f53be2146334"
+    },
+    {
+      "path": "app/logos/coupang.ico",
+      "sha256": "14dcdec7c5607ecaeaee62148fc4bb90d560b2d1dd81b3d7ab5a395146254839"
+    },
+    {
+      "path": "app/logos/disney.ico",
+      "sha256": "9ed7d0dea2d3bdf1e60430939e9d99e5f8cdfec196def106c56c486b4d743e21"
+    },
+    {
+      "path": "app/logos/netflix.png",
+      "sha256": "7341f7b8b0ae3c0da4aea559efc31f0b53d9db9dd291664fdcf7d618fd95ed8a"
+    },
+    {
+      "path": "app/logos/youtube.png",
+      "sha256": "eab2dd138ce35af20531767303fdd0c5ecfb117a43153cf6a613f349f439ce78"
+    },
+    {
+      "path": "app/logos/youtube.svg",
+      "sha256": "c0a37f198c126c91500e245a006fc1db1ebeaa6c5cb737f0097e1f26770532c1"
+    },
+    {
+      "path": "app/main.js",
+      "sha256": "282ce84a3dd7a87c486a472d952f825b1ab2002cdb95efcb7306b84a02eb8ffa"
+    },
+    {
+      "path": "app/style.css",
+      "sha256": "b6134b9a9199aac5b7c3a5ab7a7c4c7682cf6eabc79e18b45208190686810a06"
+    },
+    {
+      "path": "app/themes/city-thumb.jpg",
+      "sha256": "c467612e306dd56ccd5254cc55df623a2726692c51e708591653f9538db970b5"
+    },
+    {
+      "path": "app/themes/cleanframe/SOURCES.json",
+      "sha256": "d849e8e4ea26fcded172d4d8c53db08a9695d02ffd495c3f7432a827547afd20"
+    },
+    {
+      "path": "app/themes/cleanframe/alpine-thumb.jpg",
+      "sha256": "bab937d01ac7f49cbca474d873a89b34c1a53b7ff5d2b4ffbf44980e506125ca"
+    },
+    {
+      "path": "app/themes/cleanframe/alpine.jpg",
+      "sha256": "793e33f58cd7161017053888c16b88df51481664bf8f1110cf20c487e8394f26"
+    },
+    {
+      "path": "app/themes/cleanframe/amber-thumb.jpg",
+      "sha256": "7cd5c2b3a9216b67eb0e618d732e2dbd64310f3dc4869721dcad65ae153f61b2"
+    },
+    {
+      "path": "app/themes/cleanframe/amber.jpg",
+      "sha256": "2cc1e5b708a6e97d7124dcefe5abd364de1b0b63ddd74e91d7efe852b9ce6ebd"
+    },
+    {
+      "path": "app/themes/cleanframe/bridge-thumb.jpg",
+      "sha256": "8399d2ded21dadd2271464c3fada064b63f092b36cd7dfa576207778184d1d6d"
+    },
+    {
+      "path": "app/themes/cleanframe/bridge.jpg",
+      "sha256": "b7037c228f5117be9054a3c545616c9982cbdf26ad96598affd8585f7e98c09f"
+    },
+    {
+      "path": "app/themes/cleanframe/catalog.js",
+      "sha256": "5426aecdcdf5460999c494066e9ce613103ebef6d38298b7db19086bbf62c18b"
+    },
+    {
+      "path": "app/themes/cleanframe/cove-thumb.jpg",
+      "sha256": "7fc4a32e8154f67f50ca931494ad666242379eeea0c734a9facb029d6195010d"
+    },
+    {
+      "path": "app/themes/cleanframe/cove.jpg",
+      "sha256": "153d01ee8b8632f9778abadd8bda01f7eca06686e7ef5fe679372ee0f1184b94"
+    },
+    {
+      "path": "app/themes/cleanframe/forest-thumb.jpg",
+      "sha256": "1c56f9939635f0b1ffa9095813b9e1b2b881222190dfbec3d36974da94ccae23"
+    },
+    {
+      "path": "app/themes/cleanframe/forest.jpg",
+      "sha256": "ab774c02c23a5e345679a54d5dd179cbfd346d99a172eab07b13d0aae5714677"
+    },
+    {
+      "path": "app/themes/cleanframe/goldcoast-thumb.jpg",
+      "sha256": "14f8512750b992d3aefbe0d1f9ec00f3dbfd3ca80371f39d1fdea159307688ac"
+    },
+    {
+      "path": "app/themes/cleanframe/goldcoast.jpg",
+      "sha256": "c1e75780b2d8d90f3701921a86713b7987e5864c5bbf01921923fd564b8ac965"
+    },
+    {
+      "path": "app/themes/cleanframe/golden-thumb.jpg",
+      "sha256": "3a1474a3257be25967f0b36a6bd9119e63f23053f4d06ebd5d6fc4c505acdb96"
+    },
+    {
+      "path": "app/themes/cleanframe/golden.jpg",
+      "sha256": "fc189207dc825251791434972acd281212b7c8b89f5a1e1e2bb4bb776d0f8531"
+    },
+    {
+      "path": "app/themes/cleanframe/mint-thumb.jpg",
+      "sha256": "17326cf748ad9946605035798e9ddefb3916f608b6f58c59ee6d9bf0b22a43aa"
+    },
+    {
+      "path": "app/themes/cleanframe/mint.jpg",
+      "sha256": "7fef40b3984ac2cd3a248cd0099a570c55e2d690e068eaac7066ede561f7e252"
+    },
+    {
+      "path": "app/themes/cleanframe/misty-thumb.jpg",
+      "sha256": "41bdf40feda1ffccd59172c053401b48ef73004032b971e2f6b03ca8164ac43d"
+    },
+    {
+      "path": "app/themes/cleanframe/misty.jpg",
+      "sha256": "1adb0054bc55cafcf77257598e91972f54424bfa295e02d3fff8aac731364bda"
+    },
+    {
+      "path": "app/themes/cleanframe/night-thumb.jpg",
+      "sha256": "1198eb240bdbdde58b7265caf9ddc2fde0a439b36ca44684e0b380312eaa911d"
+    },
+    {
+      "path": "app/themes/cleanframe/night.jpg",
+      "sha256": "24d8c1c66a5417d7a8b7000fc7eccaedba98913e4eacc4216e2b91229bff36db"
+    },
+    {
+      "path": "app/themes/cleanframe/peaks-thumb.jpg",
+      "sha256": "481b3a4b50196e4a7b329fc2a66367aec237d7f45a633baa02a0d8db1ad99e91"
+    },
+    {
+      "path": "app/themes/cleanframe/peaks.jpg",
+      "sha256": "8e43051a740c9f00b7b07a2b6a7f0b3a0c2d4d4047a300b6c6ccfa35026adb19"
+    },
+    {
+      "path": "app/themes/cleanframe/ridge-thumb.jpg",
+      "sha256": "65744e6f48da45469493b9668307b364f71541ec3fc5febd30d5ae35b4939ec9"
+    },
+    {
+      "path": "app/themes/cleanframe/ridge.jpg",
+      "sha256": "2c64e94f5b5ae6a428b51cdc31773b14e4663be8bc3409231d35799b16dffe93"
+    },
+    {
+      "path": "app/themes/cleanframe/summit-thumb.jpg",
+      "sha256": "9303c1f0e3eb3c10fbbf0c72be05fe2f49473c71ae9838a54119b84925b98e52"
+    },
+    {
+      "path": "app/themes/cleanframe/summit.jpg",
+      "sha256": "83ee526af314cb08f125bfd1c473eb20b9e11814289e13ef8e422a15d3dd0f70"
+    },
+    {
+      "path": "app/themes/cleanframe/sydney-thumb.jpg",
+      "sha256": "89a9bf3a637a6a81a3a7dbbaca0eac67c38c724d6182809272d8a41626056bd7"
+    },
+    {
+      "path": "app/themes/cleanframe/sydney.jpg",
+      "sha256": "ed5be5f006d1e00ff3179987205a31bf01b4950c48b41e3ff391d583d1254e9c"
+    },
+    {
+      "path": "app/themes/cleanframe/valley-thumb.jpg",
+      "sha256": "a6df766de3479d2e90487966dab2ebbcd470234f653b77d40b5bee1108487534"
+    },
+    {
+      "path": "app/themes/cleanframe/valley.jpg",
+      "sha256": "9e2ddaeb50b4555db4b3503eed9d1c17b0822c35a64a74042ba9f48ba334c7de"
+    },
+    {
+      "path": "app/themes/desert-thumb.jpg",
+      "sha256": "a9afc7f6f1a3977a7c72ce2bef9d2c6d4537e8ae33fd876489fef18311ae569d"
+    },
+    {
+      "path": "app/themes/forest-thumb.jpg",
+      "sha256": "ea6dcd73b03698d90a8c935836d57dbc1bf31706bc1e6a52d15921f6a79d4309"
+    },
+    {
+      "path": "app/themes/lake-thumb.jpg",
+      "sha256": "925dfddb76fdda0b5bf09c0e241140b53168537c2c1c25829d9871d0190ff742"
+    },
+    {
+      "path": "app/themes/sea-thumb.jpg",
+      "sha256": "930edb73e92c03b5b528976c7ca51838a0e09e9e83e931ac72563a678fb8830f"
+    },
+    {
+      "path": "app/themes/valley-thumb.jpg",
+      "sha256": "2c72cf57300c42832c4a84b7b61d607eebabfe7d68bfb4c92de87c14b26e5aec"
+    },
+    {
+      "path": "app/wallpaper-city.jpg",
+      "sha256": "812906d3e4a4690b133acbd0ab414c6455390d76b195b7ca447f2dace2fa3d01"
+    },
+    {
+      "path": "app/wallpaper-desert.jpg",
+      "sha256": "208d8b60f5f1cf3fd65e3fc4b88503a4b78c14cb8162b02c2c3f5856e5dc3540"
+    },
+    {
+      "path": "app/wallpaper-forest.jpg",
+      "sha256": "954d9237401e5a403939c258007d3258c42f73af8d434b5be6dd3e8cdfe0d9a0"
+    },
+    {
+      "path": "app/wallpaper-lake.jpg",
+      "sha256": "8398fdf60b1915ff2810b18d27b5fb9da90179076736ca32f8a5c527085a9ee6"
+    },
+    {
+      "path": "app/wallpaper-sea.jpg",
+      "sha256": "fdd8626c6b669a0b665969a6efe0027ca074a184aa78699327d6ba984f8c7e70"
+    },
+    {
+      "path": "app/wallpaper.jpg",
+      "sha256": "7f81aa53a76d4585045326a1c980942a282fb25f66ef2c8f73390c70a5d53a3a"
+    },
+    {
+      "path": "app/weather.js",
+      "sha256": "2a40c7cac78811cfdf2fc47bcbb4590e4c19bc1454ede7da1a85ba7a52950fbb"
+    }
+  ],
+  "snapshotAt": "2026-10-20T19:21:34.037020+09:00"
+}

@@ -1,0 +1,794 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap');
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+@font-face{font-family:Inter;src:url('fonts/inter-regular.woff2') format('woff2');font-weight:400 900;font-display:swap}
+@font-face{font-family:Inter;src:url('fonts/inter-light.woff2') format('woff2');font-weight:100 300;font-display:swap}
+
+body,button{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Inter,Arial,sans-serif}
+body{
+ background:#182529 url('wallpaper.jpg') center center/cover no-repeat;
+ color:#f4f0e8;
+ --card-bg:linear-gradient(145deg,rgba(22,38,54,.84),rgba(13,24,36,.88));
+ --card-border:rgba(255,255,255,.26);
+ --dock-bg:linear-gradient(115deg,rgba(237,244,230,.20),rgba(16,23,29,.68));
+ --pill-bg:rgba(16,35,50,.62);
+}
+body:before{
+ content:'';position:fixed;inset:0;
+ background:linear-gradient(180deg,rgba(8,16,28,.38) 0%,rgba(8,16,28,.12) 45%,rgba(5,10,16,.58) 100%);
+ pointer-events:none;z-index:0;
+}
+
+/* 8 Asset Themes */
+body[data-scene="valley"]{
+ background:#182529 url('wallpaper.jpg') center/cover no-repeat!important;
+ --card-bg:linear-gradient(145deg,rgba(24,42,56,.84),rgba(15,27,38,.88));
+ --dock-bg:linear-gradient(115deg,rgba(237,244,230,.22),rgba(16,23,29,.68));
+}
+body[data-scene="sea"]{
+ background:#153443 url('wallpaper-sea.jpg') center/cover no-repeat!important;
+ --card-bg:linear-gradient(145deg,rgba(19,52,68,.84),rgba(13,34,48,.88));
+ --dock-bg:linear-gradient(115deg,rgba(210,244,252,.24),rgba(12,33,45,.68));
+}
+body[data-scene="city"]{
+ background:#101827 url('wallpaper-city.jpg') center/cover no-repeat!important;
+ --card-bg:linear-gradient(145deg,rgba(24,33,56,.86),rgba(14,20,36,.90));
+ --dock-bg:linear-gradient(115deg,rgba(205,220,255,.18),rgba(12,17,30,.74));
+}
+body[data-scene="forest"]{
+ background:#132f25 url('wallpaper-forest.jpg') center/cover no-repeat!important;
+ --card-bg:linear-gradient(145deg,rgba(23,51,43,.85),rgba(15,34,29,.89));
+ --dock-bg:linear-gradient(115deg,rgba(215,238,212,.22),rgba(12,37,27,.70));
+}
+body[data-scene="desert"]{
+ background:#523923 url('wallpaper-desert.jpg') center/cover no-repeat!important;
+ --card-bg:linear-gradient(145deg,rgba(68,48,35,.85),rgba(42,31,24,.89));
+ --dock-bg:linear-gradient(115deg,rgba(255,242,214,.24),rgba(48,32,19,.70));
+}
+body[data-scene="lake"]{
+ background:#1a3040 url('wallpaper-lake.jpg') center/cover no-repeat!important;
+ --card-bg:linear-gradient(145deg,rgba(30,56,72,.85),rgba(20,38,52,.89));
+ --dock-bg:linear-gradient(115deg,rgba(216,233,243,.23),rgba(16,38,51,.70));
+}
+body[data-scene="aurora"]{
+ background-image:radial-gradient(ellipse at 75% 15%,rgba(16,185,129,.38),transparent 55%),radial-gradient(ellipse at 25% 20%,rgba(139,92,246,.34),transparent 55%),linear-gradient(180deg,rgba(6,15,28,.55),rgba(5,12,22,.72)),url('wallpaper.jpg')!important;
+ background-size:cover!important;background-position:center!important;
+ --card-bg:linear-gradient(145deg,rgba(18,44,52,.86),rgba(17,25,46,.90));
+ --dock-bg:linear-gradient(115deg,rgba(167,243,208,.20),rgba(15,23,42,.74));
+}
+body[data-scene="noir"]{
+ background-image:linear-gradient(180deg,rgba(4,7,13,.68),rgba(4,7,13,.82)),url('wallpaper-city.jpg')!important;
+ background-size:cover!important;background-position:center!important;
+ --card-bg:linear-gradient(145deg,rgba(18,22,31,.90),rgba(10,13,20,.94));
+ --dock-bg:linear-gradient(115deg,rgba(255,255,255,.12),rgba(8,10,16,.82));
+}
+
+/* Phase & Auto-Night Tints */
+body:after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none}
+body[data-phase="morning"]:after{background:#ffc78212}
+body[data-phase="sunset"]:after{background:#c3654122}
+body.auto-night:after,body[data-phase="night"]:after{background:#00132966}
+
+/* Unified Main Layout: Header Top-Left (Clock + Date only), Tools Top-Right, Widgets Center, Apps Dock Bottom */
+main{display:block;position:relative;height:100vh;padding:0;z-index:2}
+.brand,footer,main>section{display:none!important}
+header{
+ position:absolute;top:4.2vh;left:5vw;right:auto;height:7.5vh;max-width:58vw;
+ display:flex;justify-content:flex-start;align-items:center;z-index:3;
+}
+.clock-row{display:flex;align-items:center;gap:20px}
+#clock{font-size:clamp(32px,2.7vw,52px);font-weight:300;letter-spacing:-1px;text-shadow:0 2px 10px rgba(0,0,0,.35)}
+#date{
+ font-size:clamp(16px,1.25vw,24px);font-weight:400;color:rgba(255,255,255,.84);
+ margin:0;padding-left:20px;border-left:1px solid rgba(255,255,255,.28);
+ letter-spacing:-.2px;white-space:nowrap;text-shadow:0 2px 8px rgba(0,0,0,.35);
+}
+
+/* Top-Right Action Tools Bar (Never at bottom) */
+#tools{
+ position:absolute;top:4.8vh;right:5vw;bottom:auto;left:auto;height:44px;padding:0;
+ display:flex;gap:10px;z-index:3;align-items:center;
+}
+button{
+ border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#f4f0e8;
+ border-radius:18px;font-size:18px;cursor:pointer;transition:background .06s ease,transform .06s ease,border-color .06s ease;outline:none;
+}
+#tools button{
+ height:42px;margin:0;padding:0 18px;flex:none;
+ font-size:clamp(12px,.88vw,16px);font-weight:500;color:#fff;
+ background:var(--pill-bg,rgba(16,35,50,.62));border:1px solid rgba(255,255,255,.26);
+ border-radius:24px;backdrop-filter:blur(12px);
+ transition:transform .08s cubic-bezier(0.16,1,0.3,1),
+            box-shadow .08s cubic-bezier(0.16,1,0.3,1),
+            background .08s ease,color .08s ease;
+}
+#tools button:focus{
+ background:#fff;color:#0b1924;border-color:#fff;transform:translateY(-2px) scale(1.03);
+ box-shadow:inset 0 1.5px 1px rgba(255,255,255,.95),0 10px 24px rgba(0,0,0,.35),0 0 0 2px #fff;
+}
+
+/* Center Widgets Grid (Expanded & Clean without Act Banner) */
+#widgets{
+ position:absolute;top:16.2vh;bottom:auto;left:5vw;right:5vw;height:46.2vh;
+ display:grid;grid-template-columns:1.12fr 1.22fr 1.14fr 1.18fr;gap:1.3vw;z-index:2;
+}
+.widget-card{
+ height:100%;min-width:0;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;
+ text-align:left;padding:1.6vw 1.8vw;border-radius:30px;
+ border:1px solid var(--card-border,rgba(255,255,255,.26));
+ background:var(--card-bg,linear-gradient(145deg,rgba(22,38,54,.84),rgba(13,24,36,.88)));
+ color:#fff;box-shadow:0 14px 34px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.18);
+ overflow:hidden;font-weight:400;gap:0;position:relative;
+ transition:transform .08s cubic-bezier(0.16,1,0.3,1),
+            box-shadow .08s cubic-bezier(0.16,1,0.3,1),
+            border-color .08s ease,
+            background .08s ease;
+}
+.widget-card:focus{
+ border-color:rgba(255,255,255,.95)!important;
+ transform:translateY(-5px) scale(1.02);
+ box-shadow:
+   inset 0 1.5px 1px 0 rgba(255,255,255,.85),
+   0 18px 40px rgba(0,0,0,.45),
+   0 0 0 2px rgba(255,255,255,.95),
+   0 0 30px rgba(56,189,248,.38);
+ z-index:5;
+}
+.weather-card:focus{
+ box-shadow:
+   inset 0 1.5px 1px 0 rgba(255,255,255,.85),
+   0 18px 40px rgba(0,0,0,.45),
+   0 0 0 2px rgba(255,255,255,.95),
+   0 0 32px rgba(56,189,248,.48)!important;
+}
+.yna-apple-card:focus,.news-card:focus{
+ box-shadow:
+   inset 0 1.5px 1px 0 rgba(255,255,255,.85),
+   0 18px 40px rgba(0,0,0,.45),
+   0 0 0 2px rgba(255,255,255,.95),
+   0 0 32px rgba(96,165,250,.48)!important;
+}
+.stocks-card:focus{
+ box-shadow:
+   inset 0 1.5px 1px 0 rgba(255,255,255,.85),
+   0 18px 40px rgba(0,0,0,.45),
+   0 0 0 2px rgba(255,255,255,.95),
+   0 0 32px rgba(52,211,153,.42)!important;
+}
+.ott-card:focus{
+ box-shadow:
+   inset 0 1.5px 1px 0 rgba(255,255,255,.85),
+   0 18px 40px rgba(0,0,0,.45),
+   0 0 0 2px rgba(255,255,255,.95),
+   0 0 32px rgba(244,63,94,.45)!important;
+}
+.widget-card p{margin:0}
+.widget-title-row{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;margin-bottom:.8vh}
+.widget-heading{font-size:clamp(14px,1.05vw,21px);font-weight:600;opacity:.94;letter-spacing:-.3px}
+.widget-badge{font-size:clamp(10px,.72vw,13px);padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.85)}
+.widget-temperature{font-size:clamp(22px,2.2vw,42px);font-weight:300;letter-spacing:-1px;margin:1vh 0!important}
+.widget-sub{font-size:clamp(12px,.95vw,19px);line-height:1.45;opacity:.88}
+.widget-source{font-size:clamp(10px,.72vw,14px);opacity:.68;margin-top:auto!important;line-height:1.35}
+
+/* Apple Weather Main Widget Card (.weather-card) */
+.weather-card{
+ background:linear-gradient(160deg,#1d4ed8e0 0%,#0ea5e9d8 52%,#0284c7e6 100%)!important;
+ border-color:rgba(186,230,253,.42)!important;
+}
+.weather-card[data-wx-kind="clear-night"],.weather-card[data-wx-kind="partly-cloudy-night"]{
+ background:linear-gradient(160deg,#0f172ae8 0%,#1e1b4be6 55%,#312e81e6 100%)!important;
+}
+.weather-card[data-wx-kind="cloudy"],.weather-card[data-wx-kind="fog"]{
+ background:linear-gradient(160deg,#334155e6 0%,#475569e0 55%,#1e293be8 100%)!important;
+}
+.weather-card[data-wx-kind="rain"],.weather-card[data-wx-kind="storm"]{
+ background:linear-gradient(160deg,#1e293be8 0%,#1e3a5fe6 55%,#0f172ae8 100%)!important;
+}
+.aw-card-top{display:flex;justify-content:space-between;align-items:flex-start;width:100%}
+.aw-card-left{display:flex;flex-direction:column;gap:2px}
+.aw-loc{font-size:clamp(14px,1.05vw,21px);font-weight:600;letter-spacing:-.2px;opacity:.95}
+.aw-temp{font-size:clamp(34px,3.3vw,64px);font-weight:200;line-height:1.02;letter-spacing:-2px}
+.aw-card-right{display:flex;flex-direction:column;align-items:flex-end;text-align:right;gap:2px}
+.aw-card-icon{margin-bottom:2px}
+.aw-cond{font-size:clamp(13px,.95vw,18px);font-weight:600}
+.aw-hilow{font-size:clamp(11px,.78vw,15px);opacity:.88}
+.aw-mini-hourly{
+ display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:100%;
+ margin-top:auto;padding-top:1.1vh;border-top:1px solid rgba(255,255,255,.22);
+}
+.aw-mini-col{display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
+.aw-mini-time{font-size:clamp(10px,.72vw,13px);opacity:.86}
+.aw-mini-icon{display:flex;align-items:center;justify-content:center;height:26px}
+.aw-mini-temp{font-size:clamp(12px,.85vw,16px);font-weight:600}
+.aw-mini-placeholder{grid-column:1/-1;font-size:14px;opacity:.85;padding:6px 0}
+.aw-card-foot{width:100%;padding-top:.8vh}
+
+/* News Card */
+.news-card{display:flex;flex-direction:column;justify-content:space-between}
+.news-list-wrap{display:flex;flex-direction:column;gap:1.1vh;my:auto;width:100%}
+.news-headline{
+ font-size:clamp(14px,1.08vw,21px);font-weight:400;line-height:1.42;
+ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;width:100%;
+ padding-left:10px;border-left:2px solid rgba(56,189,248,.65);
+}
+
+/* Real-Time Stock Market Widget Card (.stocks-card) */
+.stocks-card{
+ background:linear-gradient(145deg,rgba(15,23,42,.90),rgba(23,37,64,.88))!important;
+ border-color:rgba(148,163,184,.32)!important;
+}
+.stock-session-pill{
+ display:inline-flex;align-items:center;gap:6px;
+ font-size:clamp(10px,.72vw,13px);padding:4px 10px;border-radius:999px;
+ background:rgba(255,255,255,.10);color:#e2e8f0;font-weight:500;
+}
+@keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.live-dot{
+ width:7px;height:7px;border-radius:50%;background:#10b981;
+ box-shadow:0 0 8px #10b981;animation:livePulse 2s infinite;
+}
+.stock-rows-wrap{display:flex;flex-direction:column;gap:1vh;width:100%;margin:auto 0}
+.stock-item-row{
+ display:grid;grid-template-columns:1fr auto 1.15fr;align-items:center;gap:10px;
+ padding:.9vh .9vw;border-radius:18px;background:rgba(255,255,255,.06);
+ border:1px solid rgba(255,255,255,.10);
+}
+.stock-meta-col{display:flex;flex-direction:column;gap:2px;min-width:0}
+.stock-name{font-size:clamp(14px,1.05vw,20px);font-weight:600;white-space:nowrap}
+.stock-sub{font-size:clamp(10px,.68vw,13px);color:#94a3b8}
+.stock-spark-col{display:flex;align-items:center;justify-content:center}
+.stock-val-col{display:flex;flex-direction:column;align-items:flex-end;text-align:right;gap:2px}
+.stock-price{font-size:clamp(15px,1.18vw,23px);font-weight:600;letter-spacing:-.4px}
+.stock-change{
+ font-size:clamp(10px,.74vw,14px);font-weight:600;padding:2px 8px;border-radius:8px;white-space:nowrap;
+}
+.stock-change.up{color:#fecdd3;background:rgba(244,63,94,.24)}
+.stock-change.down{color:#bfdbfe;background:rgba(59,130,246,.24)}
+.stock-change.flat{color:#cbd5e1;background:rgba(148,163,184,.18)}
+
+/* Bottom Apps Dock */
+#apps{
+ position:absolute;top:auto;left:5vw;right:5vw;bottom:5.5vh;height:20vh;
+ display:flex;padding:8px;gap:6px;border-radius:30px;
+ border:1px solid rgba(255,255,255,.28);
+ background:var(--dock-bg,linear-gradient(115deg,rgba(237,244,230,.20),rgba(16,23,29,.68)));
+ box-shadow:0 12px 34px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.22);
+ z-index:2;
+}
+#apps button{
+ flex:1;min-width:0;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+ padding:12px 8px;border-radius:24px;border:1.5px solid transparent;background:transparent;
+ color:#f6f3ed;box-shadow:none;gap:14px;font-weight:400;
+ transition:transform .08s cubic-bezier(0.16,1,0.3,1),
+            box-shadow .08s cubic-bezier(0.16,1,0.3,1),
+            background .08s ease,border-color .08s ease;
+}
+#apps button:focus{
+ transform:scale(1.045) translateY(-4px);
+ background:linear-gradient(145deg,rgba(255,255,255,.38),rgba(255,255,255,.16));
+ border-color:rgba(255,255,255,.92);
+ box-shadow:
+   inset 0 1.5px 1px 0 rgba(255,255,255,.90),
+   0 16px 36px rgba(0,0,0,.45),
+   0 0 0 2px rgba(255,255,255,.90),
+   0 0 28px rgba(255,255,255,.30);
+ z-index:3;
+}
+#apps .app-logo{height:4.8vw;width:5vw;max-height:68px;object-fit:contain;background:transparent;box-shadow:none;border-radius:0;filter:none}
+#apps .app-name{font-size:clamp(19px,1.85vw,34px);font-weight:400;line-height:1.2}
+#apps small{display:none}
+#status{position:absolute;left:5vw;right:5vw;bottom:1.2vh;height:26px;margin:0;font-size:17px;color:#f1d7a3;text-shadow:0 2px 5px #000;z-index:3}
+
+/* Modals & Dialogs (#overlay) */
+#overlay{
+ position:fixed;inset:6vh 10vw;max-height:88vh;z-index:6;
+ background:linear-gradient(145deg,#132330,#0c1822);border:1px solid rgba(255,255,255,.24);
+ border-radius:28px;padding:30px 38px;box-shadow:0 24px 70px rgba(0,0,0,.65);overflow-y:auto;
+}
+#overlay h2{font-weight:500;font-size:32px;letter-spacing:-.8px;margin:0 0 8px}
+#overlay .settings-intro{font-size:16px;color:#b8c8d0;margin:0 0 20px;line-height:1.5}
+#overlay h3{font-size:18px;margin:20px 0 10px;color:#d9e6e9}
+#overlay button{display:inline-block;min-width:130px;height:48px;flex:none;padding:0 20px;font-size:16px;margin:6px 8px 6px 0;border-radius:14px}
+#overlay button:focus{color:#0f2430;background:#f4f6f2;box-shadow:0 0 0 3px rgba(125,211,252,.5);border-color:#fff;transform:none}
+#overlay button:disabled{opacity:.25;cursor:default}
+
+/* Apple Weather Detail Modal (#overlay.apple-weather-dialog) */
+#overlay.apple-weather-dialog{
+ background:linear-gradient(165deg,#173f7a 0%,#0f294d 52%,#0b192e 100%);
+ border-color:rgba(186,230,253,.35);
+}
+#overlay.apple-weather-dialog[data-wx-kind="clear-night"],#overlay.apple-weather-dialog[data-wx-kind="partly-cloudy-night"]{
+ background:linear-gradient(165deg,#0f172a 0%,#1e1b4b 55%,#090d16 100%);
+}
+#overlay.apple-weather-dialog>h2{display:none}
+.aw-detail-hero{
+ display:flex;justify-content:space-between;align-items:flex-start;
+ padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.16);
+}
+.aw-detail-loc{font-size:18px;font-weight:600;color:#bae6fd;margin:0 0 4px!important}
+.aw-detail-temp-row{display:flex;align-items:center;gap:18px;margin:4px 0}
+.aw-detail-bigtemp{font-size:68px;font-weight:200;letter-spacing:-3px;line-height:1;margin:0!important;color:#fff}
+.aw-detail-cond-col{display:flex;flex-direction:column;gap:4px}
+.aw-detail-cond{font-size:24px;font-weight:600;color:#fff;margin:0!important}
+.aw-detail-hilow{font-size:16px;color:#e0f2fe;margin:0!important}
+.aw-detail-summary{font-size:15px;color:#cbd5e1;margin:6px 0 0!important}
+.aw-detail-actions{display:flex;gap:8px;align-items:center}
+
+.aw-section-card{
+ background:rgba(15,23,42,.42);border:1px solid rgba(255,255,255,.16);
+ border-radius:22px;padding:16px 20px;margin-bottom:14px;backdrop-filter:blur(16px);
+}
+.aw-section-title{
+ font-size:13px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;
+ color:rgba(224,242,254,.78);margin:0 0 10px!important;
+}
+.aw-curve-wrap{width:100%;height:82px;margin-bottom:4px}
+.aw-curve-svg{width:100%;height:100%;display:block}
+.aw-hourly-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;text-align:center}
+.aw-hour-cell{
+ display:flex;flex-direction:column;align-items:center;gap:4px;
+ padding:8px 4px;border-radius:14px;background:rgba(255,255,255,.05);
+}
+.aw-hour-time{font-size:14px;color:#e2e8f0;margin:0!important}
+.aw-hour-icon{height:36px;display:flex;align-items:center;justify-content:center}
+.aw-hour-pop{font-size:12px;color:#94a3b8;margin:0!important}
+.aw-hour-pop.has-pop{color:#38bdf8;font-weight:600}
+
+.aw-detail-midgrid{display:grid;grid-template-columns:1.25fr 1fr;gap:14px}
+.aw-daily-card{margin-bottom:0}
+.aw-day-row{
+ display:grid;grid-template-columns:56px 76px 38px 1fr 38px;align-items:center;gap:10px;
+ padding:7px 0;border-bottom:1px solid rgba(255,255,255,.08);
+}
+.aw-day-row:last-child{border-bottom:none}
+.aw-day-name{font-size:16px;font-weight:600;color:#fff;margin:0!important}
+.aw-day-iconcol{display:flex;align-items:center;gap:4px}
+.aw-day-pop{font-size:12px;color:#38bdf8;font-weight:600;margin:0!important}
+.aw-day-min{font-size:15px;color:#94a3b8;text-align:right;margin:0!important}
+.aw-day-max{font-size:15px;font-weight:600;color:#fff;margin:0!important}
+.aw-range-track{
+ position:relative;height:7px;border-radius:999px;background:rgba(255,255,255,.14);overflow:hidden;
+}
+.aw-range-fill{
+ position:absolute;top:0;bottom:0;border-radius:999px;
+ background:linear-gradient(90deg,#38bdf8 0%,#a3e635 45%,#facc15 75%,#fb923c 100%);
+}
+.aw-range-dot{
+ position:absolute;top:50%;width:9px;height:9px;border-radius:50%;
+ background:#fff;border:2px solid #0f172a;transform:translate(-50%,-50%);
+}
+.aw-bento-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.aw-bento-card{margin-bottom:0;display:flex;flex-direction:column;justify-content:space-between}
+.aw-bento-val{font-size:24px;font-weight:600;color:#fff;margin:4px 0!important}
+.aw-bento-sub{font-size:13px;color:#cbd5e1;line-height:1.4;margin:6px 0 0!important}
+.aw-air-bar{
+ position:relative;height:7px;border-radius:999px;margin:8px 0;
+ background:linear-gradient(90deg,#22c55e 0%,#eab308 40%,#f97316 70%,#ef4444 100%);
+}
+.aw-air-dot{
+ position:absolute;top:50%;width:11px;height:11px;border-radius:50%;
+ background:#fff;border:2px solid #0f172a;transform:translate(-50%,-50%);
+}
+
+/* Stocks Detail Modal */
+.stocks-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.stock-detail-card{
+ padding:18px 22px;border-radius:20px;background:rgba(255,255,255,.06);
+ border:1px solid rgba(255,255,255,.14);display:flex;flex-direction:column;gap:8px;
+}
+.stock-detail-top{display:flex;justify-content:space-between;align-items:center}
+.stock-detail-name{font-size:20px;font-weight:600;color:#fff;margin:0!important}
+.stock-detail-badge{font-size:12px;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.12);color:#cbd5e1;margin:0!important}
+.stock-detail-mid{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.stock-detail-price{font-size:32px;font-weight:600;color:#fff;letter-spacing:-1px;margin:0!important}
+.stock-detail-change{font-size:16px;font-weight:600;padding:4px 10px;border-radius:10px;margin:0!important}
+.stock-detail-change.up{color:#fecdd3;background:rgba(244,63,94,.24)}
+.stock-detail-change.down{color:#bfdbfe;background:rgba(59,130,246,.24)}
+.stock-detail-chart{width:100%;height:68px;margin:4px 0}
+.stock-detail-chart svg{width:100%;height:100%}
+.stock-detail-range{font-size:13px;color:#94a3b8;margin:0!important}
+
+/* Settings & Appearance Lists */
+.settings-list{display:grid;gap:10px}
+.manage-row{
+ display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.06);
+ border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:12px 18px;margin-bottom:10px;
+}
+.manage-row img{width:42px;height:42px;object-fit:contain}
+.manage-label{flex:1;display:flex;flex-direction:column;min-width:0;gap:4px}
+.manage-label strong{font-size:21px;font-weight:500}
+.manage-label span{font-size:13px;color:#99b0be}
+#overlay .manage-row button{height:42px;min-width:54px;padding:0 14px;font-size:16px;margin:0;border-radius:12px;background:rgba(255,255,255,.09)}
+#overlay .manage-row button:last-child{min-width:86px;font-size:15px}
+#overlay .settings-chips{display:flex;gap:10px;flex-wrap:wrap}
+#overlay .settings-chips button{height:44px;font-size:15px;min-width:120px;padding:0 18px;margin:0}
+.settings-bottom{margin-top:18px;text-align:right}
+.appearance-preview{
+ height:110px;background-size:cover;background-position:center;border-radius:20px;
+ display:flex;align-items:flex-end;padding:18px 22px;font-size:21px;font-weight:500;
+ text-shadow:0 2px 8px #000;border:1px solid rgba(255,255,255,.22);
+}
+.scene-choices{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+#overlay .scene-choices button{
+ width:100%;height:104px;margin:0;min-width:0;background-size:cover;background-position:center;
+ border-radius:18px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;
+ padding:14px 16px;text-align:left;text-shadow:0 2px 8px #000;color:#fff;gap:3px;
+}
+.scene-choice-title{font-size:18px;font-weight:600;display:block}
+.scene-choice-sub{font-size:11px;opacity:.86;display:block;font-weight:400}
+.scene-choice-aurora{box-shadow:inset 0 0 28px rgba(16,185,129,.45)}
+.scene-choice-noir{box-shadow:inset 0 0 28px rgba(0,0,0,.75)}
+#overlay .scene-choices button[aria-pressed="true"]{border:3px solid #f5f3e9}
+.appearance-options{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#overlay .appearance-options button{font-size:15px;height:50px;margin:0;min-width:0;text-align:left;padding:0 18px}
+.headline-row{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.14)}
+#overlay .headline-title{font-size:21px;color:#f5f4ec;margin:0 0 6px;line-height:1.45}
+#overlay .headline-time{font-size:13px;color:#9fb5c4;margin:0}
+
+/* Idle Saver & Cinema Mode (Minimal Gallery Style) */
+#saver{position:fixed;inset:0;background:#030608;color:#f8fafc;z-index:8}
+#saver-content{
+ position:absolute;left:5.5vw;bottom:9vh;top:auto;
+ display:flex;flex-direction:column;align-items:flex-start;gap:4px;
+ text-shadow:0 4px 24px rgba(0,0,0,.5);
+}
+#saver-time{font-weight:200;font-size:clamp(56px,5.5vw,106px);line-height:1;letter-spacing:-2.5px;color:rgba(255,255,255,.95)}
+#saver-date{font-size:clamp(16px,1.15vw,21px);font-weight:400;color:rgba(255,255,255,.80);margin:6px 0 0}
+#saver-weather{font-size:clamp(16px,1.15vw,21px);font-weight:400;color:rgba(255,255,255,.80);margin:0}
+.saver-wx-minimal{opacity:.88;letter-spacing:-.2px}
+body.saver-photos #saver{background:linear-gradient(180deg,rgba(0,0,0,.06) 0%,rgba(0,0,0,.14) 58%,rgba(0,0,0,.52) 100%),url('wallpaper.jpg') center/cover}
+body.saver-photos #saver[data-scene="valley"],body.saver-photos #saver[data-scene="aurora"]{background-image:linear-gradient(180deg,rgba(0,0,0,.06) 0%,rgba(0,0,0,.14) 58%,rgba(0,0,0,.52) 100%),url('wallpaper.jpg')}
+body.saver-photos #saver[data-scene="sea"]{background-image:linear-gradient(180deg,rgba(0,0,0,.06) 0%,rgba(0,0,0,.14) 58%,rgba(0,0,0,.52) 100%),url('wallpaper-sea.jpg')}
+body.saver-photos #saver[data-scene="city"],body.saver-photos #saver[data-scene="noir"]{background-image:linear-gradient(180deg,rgba(0,0,0,.06) 0%,rgba(0,0,0,.14) 58%,rgba(0,0,0,.52) 100%),url('wallpaper-city.jpg')}
+body.saver-photos #saver[data-scene="forest"]{background-image:linear-gradient(180deg,rgba(0,0,0,.06) 0%,rgba(0,0,0,.14) 58%,rgba(0,0,0,.52) 100%),url('wallpaper-forest.jpg')}
+body.saver-photos #saver[data-scene="desert"]{background-image:linear-gradient(180deg,rgba(0,0,0,.06) 0%,rgba(0,0,0,.14) 58%,rgba(0,0,0,.52) 100%),url('wallpaper-desert.jpg')}
+body.saver-photos #saver[data-scene="lake"]{background-image:linear-gradient(180deg,rgba(0,0,0,.06) 0%,rgba(0,0,0,.14) 58%,rgba(0,0,0,.52) 100%),url('wallpaper-lake.jpg')}
+
+body.cinema header,body.cinema #tools,body.cinema #widgets,body.cinema #status,body.cinema #weather-backdrop{visibility:hidden}
+body.cinema #apps{bottom:12vh}
+body.reduced *,body.reduced .wx-raindrop,body.reduced .wx-snowflake,body.reduced .wx-star,body.reduced .live-dot{transition:none!important;animation:none!important}
+
+/* CleanFrame Modal Header & Profile Chips */
+.modal-clean-header{
+ display:flex;flex-direction:column;gap:6px;padding:4px 0 16px;margin-bottom:12px;
+ border-bottom:1px solid rgba(255,255,255,.14);
+}
+.modal-clean-title{
+ font-size:24px!important;font-weight:700!important;margin:0!important;color:#fff!important;letter-spacing:-.3px;
+}
+.clean-profile-chips{
+ display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;
+}
+#overlay .profile-chip-btn{
+ height:52px;padding:0 18px;border-radius:14px;font-size:17px;font-weight:600;
+ background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.18);color:#fff;
+ display:flex;align-items:center;justify-content:center;
+}
+#overlay .profile-chip-btn[aria-pressed="true"]{
+ border-color:#38bdf8;background:rgba(56,189,248,.18);color:#f0f9ff;
+}
+#overlay .profile-chip-btn:focus{
+ background:#fff;color:#0f172a;border-color:#fff;
+}
+
+/* Apple-Style Yonhap News (연합뉴스 실시간 속보) Widget & Modal */
+.yna-apple-card{
+ background:linear-gradient(155deg,rgba(15,23,42,.92) 0%,rgba(23,37,84,.88) 55%,rgba(15,23,42,.95) 100%)!important;
+ border-color:rgba(147,197,253,.35)!important;
+}
+.yna-header-bar{
+ display:flex;align-items:center;justify-content:space-between;gap:10px;
+ padding-bottom:8px;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,.14);
+}
+.yna-brand-left{display:flex;align-items:center;gap:8px}
+.yna-logo-pill{
+ display:inline-flex;align-items:center;padding:4px 11px;border-radius:8px;
+ background:linear-gradient(135deg,#0284c7,#1d4ed8);color:#fff;
+ font-size:clamp(12px,.85vw,16px);font-weight:700;letter-spacing:-.3px;
+ box-shadow:0 2px 8px rgba(2,132,199,.45);
+}
+.yna-sub-label{font-size:clamp(13px,.92vw,18px);font-weight:600;color:#f8fafc}
+.yna-live-pill{
+ display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;
+ background:rgba(239,68,68,.22);border:1px solid rgba(248,113,113,.45);
+ color:#fecaca;font-size:clamp(10px,.7vw,13px);font-weight:700;
+}
+.yna-red-dot{background:#ef4444!important;box-shadow:0 0 8px #ef4444!important}
+.yna-list-wrap{display:flex;flex-direction:column;gap:8px;flex:1;justify-content:center}
+.yna-item-row{
+ display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;
+ padding:7px 10px;border-radius:12px;background:rgba(255,255,255,.06);
+ border:1px solid rgba(255,255,255,.09);
+}
+.yna-tag{
+ display:inline-block;padding:2px 7px;border-radius:6px;
+ font-size:11px;font-weight:700;white-space:nowrap;letter-spacing:-.2px;
+}
+.yna-tag-breaking{background:#ef4444;color:#fff;box-shadow:0 2px 6px rgba(239,68,68,.4)}
+.yna-tag-excl{background:#f59e0b;color:#0f172a}
+.yna-tag-live{background:rgba(56,189,248,.22);color:#bae6fd;border:1px solid rgba(56,189,248,.35)}
+.yna-item-title{
+ font-size:clamp(12px,.86vw,16px)!important;font-weight:500;color:#f8fafc;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0!important;
+}
+.yna-item-ago{font-size:11px;color:#94a3b8;white-space:nowrap;margin:0!important}
+
+.yna-modal-list{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.yna-modal-row{
+ padding:12px 16px;border-radius:14px;background:rgba(255,255,255,.06);
+ border:1px solid rgba(255,255,255,.12);
+}
+.yna-modal-row-top{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px}
+.yna-modal-title{font-size:18px!important;font-weight:500;color:#f8fafc;margin:0!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.yna-modal-time{font-size:13px;color:#94a3b8;white-space:nowrap;margin:0!important}
+
+/* Weekly Monday Weekend OTT New Releases Widget & Modal */
+.ott-card{
+ background:linear-gradient(155deg,rgba(24,24,39,.92) 0%,rgba(49,16,66,.86) 55%,rgba(15,23,42,.94) 100%)!important;
+ border-color:rgba(216,180,254,.35)!important;
+}
+.ott-week-badge{
+ font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;
+ background:rgba(168,85,247,.25);border:1px solid rgba(216,180,254,.42);color:#f3e8ff;white-space:nowrap;
+}
+.ott-week-badge.is-monday{background:#e11d48;color:#fff;border-color:#fda4af}
+.ott-widget-list{display:flex;flex-direction:column;gap:6px;flex:1;justify-content:center}
+.ott-widget-row{
+ display:grid;grid-template-columns:68px 1fr;align-items:center;gap:8px;
+ padding:5px 9px;border-radius:11px;background:rgba(255,255,255,.06);
+ border:1px solid rgba(255,255,255,.09);
+}
+.ott-mini-pill,.ott-platform-pill{
+ display:inline-flex;align-items:center;justify-content:center;
+ padding:3px 7px;border-radius:6px;font-size:11px;font-weight:700;color:#fff;white-space:nowrap;
+}
+.ott-pill-netflix{background:#e50914}
+.ott-pill-coupang{background:#0284c7}
+.ott-pill-disney{background:#1d4ed8}
+.ott-pill-apple{background:#475569}
+.ott-widget-title{
+ font-size:clamp(11px,.8vw,15px)!important;font-weight:500;color:#f1f5f9;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0!important;
+}
+.ott-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.ott-detail-card{
+ padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.06);
+ border:1px solid rgba(255,255,255,.15);display:flex;flex-direction:column;gap:10px;
+}
+.ott-detail-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ott-platform-pill{font-size:14px;padding:5px 12px;border-radius:8px}
+#overlay .ott-launch-btn{height:36px;padding:0 14px;font-size:14px;margin:0;border-radius:999px}
+.ott-release-box,#overlay .ott-release-btn{
+ padding:10px 14px;border-radius:12px;background:rgba(0,0,0,.28);
+ border:1px solid rgba(255,255,255,.12);
+}
+#overlay .ott-release-btn{
+ width:100%;height:auto;margin:0;display:flex;flex-direction:column;
+ align-items:stretch;justify-content:center;gap:4px;text-align:left;
+ cursor:pointer;transition:transform .14s ease,border-color .14s ease,background .14s ease;
+}
+.ott-release-title-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ott-release-title{font-size:16px!important;font-weight:700;color:#fff;margin:0!important;line-height:1.35}
+.ott-link-badge{
+ padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;
+ background:rgba(168,85,247,.26);border:1px solid rgba(216,180,254,.45);
+ color:#f3e8ff;white-space:nowrap;flex-shrink:0;
+}
+.ott-release-meta{font-size:12px!important;color:#cbd5e1;margin:0!important}
+#overlay .ott-release-btn:focus{
+ background:#fff!important;border-color:#fde047!important;transform:translateY(-1px);
+}
+#overlay .ott-release-btn:focus .ott-release-title{color:#0f172a!important}
+#overlay .ott-release-btn:focus .ott-release-meta{color:#334155!important}
+#overlay .ott-release-btn:focus .ott-link-badge{background:#0f172a;color:#fde047;border-color:#0f172a}
+
+/* Crypto Market Trends Strip (BTC / ETH) & Detail Cards */
+.crypto-strip{
+ display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;
+ padding-top:6px;border-top:1px solid rgba(255,255,255,.12);
+}
+.crypto-pill{
+ display:flex;align-items:center;justify-content:space-between;gap:6px;
+ padding:5px 10px;border-radius:10px;
+ background:linear-gradient(135deg,rgba(245,158,11,.14),rgba(15,23,42,.55));
+ border:1px solid rgba(251,191,36,.28);
+}
+.crypto-pill-sym{font-size:11px!important;font-weight:700;color:#fde68a;margin:0!important;white-space:nowrap}
+.crypto-pill-price{font-size:12px!important;font-weight:700;color:#f8fafc;margin:0!important;white-space:nowrap}
+.crypto-pill-chg{font-size:11px!important;font-weight:700;margin:0!important;white-space:nowrap}
+.crypto-pill-chg.up{color:#ff6b6b}
+.crypto-pill-chg.down{color:#60a5fa}
+.crypto-pill-chg.flat{color:#94a3b8}
+.stock-crypto-card{
+ background:linear-gradient(145deg,rgba(45,27,10,.55),rgba(15,23,42,.82))!important;
+ border-color:rgba(251,191,36,.36)!important;
+}
+
+#saver-content{z-index:3}
+
+/* Screensaver Bottom Breaking News Ticker (Minimal Right-to-Left Scroll) */
+#saver[data-scene="minimal"]{background:#030508!important;background-image:none!important}
+#saver-ticker{
+ position:fixed;left:0;right:0;bottom:0;height:42px;
+ display:flex;align-items:center;z-index:10;
+ background:rgba(8,12,18,.52);
+ border-top:1px solid rgba(255,255,255,.12);
+ backdrop-filter:blur(12px);
+ overflow:hidden;
+}
+.saver-ticker-badge{
+ display:flex;align-items:center;gap:8px;height:100%;padding:0 18px;
+ background:rgba(255,255,255,.07);color:rgba(255,255,255,.92);
+ border-right:1px solid rgba(255,255,255,.12);
+ font-size:13px;font-weight:600;letter-spacing:.2px;white-space:nowrap;
+ z-index:2;
+}
+.saver-ticker-viewport{flex:1;overflow:hidden;height:100%;display:flex;align-items:center;position:relative}
+@keyframes saverTickerRightToLeft{
+ 0%{transform:translate3d(0%,0,0)}
+ 100%{transform:translate3d(-50%,0,0)}
+}
+#saver-ticker-track{
+ display:inline-flex;align-items:center;white-space:nowrap;
+ will-change:transform;
+ animation:saverTickerRightToLeft 44s linear infinite;
+}
+#saver-ticker[data-speed="slow"] #saver-ticker-track{animation-duration:62s}
+#saver-ticker[data-speed="normal"] #saver-ticker-track{animation-duration:44s}
+#saver-ticker[data-speed="fast"] #saver-ticker-track{animation-duration:26s}
+.saver-tick-half{display:inline-flex;align-items:center;white-space:nowrap}
+.saver-tick-item{display:inline-flex;align-items:center;gap:8px;padding:0 12px}
+.saver-tick-title{font-size:15px;font-weight:400;color:rgba(248,250,252,.86);letter-spacing:-.1px}
+.saver-tick-sep{color:rgba(255,255,255,.35);font-size:14px;padding:0 6px}
+
+.aw-human-callout{
+ margin:8px 0 0!important;padding:8px 14px;border-radius:12px;
+ background:rgba(253,224,71,.14);border:1px solid rgba(253,224,71,.35);
+ color:#fef08a;font-size:15px!important;font-weight:600;
+}
+
+/* CleanFrame (https://github.com/nthnclrk/CleanFrame) Themes, Font & Glass Material Integration */
+@font-face{font-family:Manrope;src:url('fonts/manrope.woff2') format('woff2');font-weight:200 800;font-display:swap}
+
+body[data-theme-group="cleanframe"]{
+ background-color:#1d2a30!important;
+ background-image:var(--scene-wallpaper,url('themes/cleanframe/misty.jpg'))!important;
+ background-size:cover!important;
+ background-position:center!important;
+ background-repeat:no-repeat!important;
+}
+body[data-scene="cf-dark"]{
+ background:#1d2a30!important;
+ background-image:none!important;
+}
+body[data-scene="cf-light"]{
+ background:#e7e5df!important;
+ background-image:none!important;
+ color:#232826;
+}
+body.saver-photos #saver[data-scene^="cf-"]{
+ background-image:linear-gradient(#0006,#0008),var(--saver-wallpaper,url('themes/cleanframe/misty.jpg'))!important;
+ background-size:cover!important;
+ background-position:center!important;
+}
+body.saver-photos #saver[data-scene="cf-dark"]{
+ background:#1d2a30!important;
+ background-image:none!important;
+}
+body.saver-photos #saver[data-scene="cf-light"]{
+ background:#e7e5df!important;
+ background-image:none!important;
+ color:#232826;
+}
+
+/* CleanFrame UI Style (Manrope Typography, Minimalist Editorial Feel, Hidden Mascots) */
+body[data-ui-style="cleanframe"],body[data-ui-style="cleanframe"] button{
+ font-family:Manrope,-apple-system,BlinkMacSystemFont,"SF Pro Display",Inter,sans-serif!important;
+}
+body[data-ui-style="cleanframe"] #clock{
+ font-weight:200;letter-spacing:-1.8px;
+}
+
+/* CleanFrame Glass Material Modes: Soft / Frost / Tint */
+body[data-cf-material="soft"] #apps,
+body[data-cf-material="soft"] .widget-card,
+body[data-cf-material="soft"] #tools button{
+ backdrop-filter:blur(18px) saturate(1.12);
+}
+body[data-cf-material="frost"]:before{
+ background:linear-gradient(180deg,rgba(255,255,255,var(--fv,.22)) 0%,rgba(15,23,42,.24) 55%,rgba(8,14,24,.48) 100%)!important;
+ backdrop-filter:blur(10px) saturate(1.06);
+}
+body[data-cf-material="frost"] #apps{
+ background:linear-gradient(135deg,rgba(255,255,255,.26),rgba(255,255,255,.12))!important;
+ border-color:rgba(255,255,255,.45)!important;
+ backdrop-filter:blur(26px) saturate(1.22)!important;
+}
+body[data-cf-material="tint"]:before{
+ background:linear-gradient(180deg,rgba(8,13,20,.62) 0%,rgba(8,13,20,.42) 50%,rgba(5,9,15,.76) 100%)!important;
+}
+body[data-cf-material="tint"] #apps{
+ background:linear-gradient(135deg,rgba(12,19,28,.82),rgba(8,13,20,.88))!important;
+ border-color:rgba(255,255,255,.18)!important;
+}
+
+/* CleanFrame App Dock Display Modes: Icons Only / Icons + Labels / Text Only */
+body[data-cf-apps="icons"] #apps .app-name{display:none!important}
+body[data-cf-apps="icons"] #apps .app-logo{height:5.6vw;width:5.8vw;max-height:80px}
+body[data-cf-apps="text"] #apps .app-logo{display:none!important}
+body[data-cf-apps="text"] #apps .app-name{font-size:clamp(22px,2.1vw,38px);font-weight:300;letter-spacing:-.5px}
+
+/* Theme Switcher Modal Badges & Grid Enhancements */
+#overlay .scene-choices button{position:relative;overflow:hidden}
+.scene-origin-pill{
+ position:absolute;top:10px;right:10px;
+ padding:3px 9px;border-radius:999px;font-size:10px;font-weight:700;
+ background:rgba(15,23,42,.78);color:#bae6fd;border:1px solid rgba(125,211,252,.45);
+ backdrop-filter:blur(6px);letter-spacing:.2px;
+}
+#tools button:first-child{
+ background:linear-gradient(135deg,rgba(56,189,248,.32),rgba(139,92,246,.32));
+ border-color:rgba(186,230,253,.55);font-weight:700;
+}
+
+/* Screensaver Location & Photographer Caption Pill */
+.saver-caption-pill{
+ position:absolute;bottom:7.2vh;right:4.8vw;
+ display:inline-flex;align-items:center;gap:8px;
+ padding:7px 18px;border-radius:999px;
+ background:rgba(15,23,42,.52);border:1px solid rgba(255,255,255,.24);
+ backdrop-filter:blur(16px) saturate(1.2);
+ color:rgba(255,255,255,.92);font-size:14px;font-weight:500;
+ letter-spacing:.2px;box-shadow:0 6px 20px rgba(0,0,0,.3);
+ z-index:4;pointer-events:none;
+ transition:opacity .4s ease,transform .4s ease;
+}
+
+/* External Input Switcher Modal (.source-dialog) */
+.source-card-grid{
+ display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:16px 0;
+}
+#overlay .source-choice-card{
+ height:auto;min-height:96px;padding:18px 22px;border-radius:22px;
+ background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.18);
+ display:flex;align-items:center;gap:18px;text-align:left;color:#fff;
+ transition:transform .08s ease,background .08s ease,border-color .08s ease;
+}
+#overlay .source-choice-card:focus{
+ background:#fff;color:#0f172a;border-color:#fff;
+ transform:scale(1.025) translateY(-3px);
+ box-shadow:0 12px 30px rgba(0,0,0,.45),0 0 0 2px #fff;
+}
+.source-card-icon{
+ font-size:36px;flex:none;line-height:1;
+}
+.source-card-text{
+ display:flex;flex-direction:column;gap:4px;min-width:0;
+}
+.source-card-title{
+ font-size:20px!important;font-weight:600!important;margin:0!important;color:inherit!important;
+}
+.source-card-desc{
+ font-size:13px!important;opacity:.8!important;margin:0!important;color:inherit!important;
+}
+
+/* The Frame Editorial Serif Typography Preset */
+body[data-font-style="serif"] #clock{
+ font-family:"Playfair Display","Baskerville","Georgia","Nanum Myeongjo",serif!important;
+ font-weight:400;letter-spacing:-1px;
+}
+body[data-font-style="serif"] #date{
+ font-family:"Playfair Display","Baskerville","Georgia","Nanum Myeongjo",serif!important;
+ font-weight:400;letter-spacing:0px;
+}
+body[data-font-style="serif"] #saver-time{
+ font-family:"Playfair Display","Baskerville","Georgia","Nanum Myeongjo",serif!important;
+ font-weight:400;letter-spacing:-1.5px;
+}
+body[data-font-style="serif"] #saver-date{
+ font-family:"Playfair Display","Baskerville","Georgia","Nanum Myeongjo",serif!important;
+ font-weight:400;letter-spacing:0px;
+}
+
+[hidden]{display:none!important}
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="https://local.cleanm7/app" version="3.2.0" viewmodes="maximized">
+<tizen:application id="CleanM7App.Home" package="CleanM7App" required_version="6.0"/>
+<content src="index.html"/><name>Clean M7</name><icon src="icon.png"/>
+<tizen:profile name="tv-samsung"/>
+<access origin="*" subdomains="true"/>
+<access origin="https://apihub.kma.go.kr" subdomains="true"/>
+<access origin="https://www.weather.go.kr" subdomains="true"/>
+<access origin="https://news.google.com" subdomains="true"/>
+<access origin="https://api.open-meteo.com" subdomains="false"/>
+<access origin="https://air-quality-api.open-meteo.com" subdomains="false"/>
+<access origin="https://m.stock.naver.com" subdomains="true"/>
+<access origin="https://api.stock.naver.com" subdomains="true"/>
+<access origin="https://polling.finance.naver.com" subdomains="true"/>
+<access origin="https://query1.finance.yahoo.com" subdomains="true"/>
+<access origin="https://api.upbit.com" subdomains="true"/>
+<access origin="http://127.0.0.1:18766" subdomains="false"/>
+<tizen:privilege name="http://tizen.org/privilege/internet"/>
+<tizen:privilege name="http://tizen.org/privilege/application.info"/>
+<tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+<tizen:setting screen-orientation="landscape" context-menu="disable" background-support="disable" encryption="disable" install-location="auto" hwkey-event="enable"/>
+</widget>
